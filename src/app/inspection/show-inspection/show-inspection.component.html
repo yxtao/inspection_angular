@@ -1,0 +1,58 @@
+<button type="button" class="btn btn-primary float-end m-2" 
+    data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+    (click)="modalAdd()">
+    Add item 
+</button>
+<table class="table table-striped">
+    <thead>
+        <th> Id </th>
+        <th> Location Id</th>
+        <th> Location </th>
+        <th> Status </th>
+        <th> Comments </th>
+        <th> Options</th>
+    </thead>
+    <tbody>
+        <tr *ngFor = "let item of inspectionList$|async">
+            <td>{{item.id}}</td>
+            <td>{{item.inspectionTypeId}}</td>
+            <td>{{inspectionTypesMap.get(item.inspectionTypeId)}}</td>
+            <td>{{item.status}}</td>
+            <td>{{item.comments}}</td>
+            <td>
+                <button class="btn btn-outline-primary m-1" 
+                        (click)="modalEdit(item)" 
+                        data-bs-toggle="modal" 
+                        data-bs-target="#staticBackdrop"> edit </button>
+                <button class="btn btn-outline-danger m-1"
+                        (click)="modalDelete(item)"> delete </button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="alert alert-success" role="alert" id="add-success-alert">
+    Inspection sucessfully added!
+</div>
+<div class="alert alert-success" role="alert" id="update-success-alert">
+    Inspection sucessfully updated!
+</div>
+<div class="alert alert-success" role="alert" id="delete-success-alert">
+    Inspection sucessfully deleted! 
+</div>
+
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" 
+    tableindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">{{modalTitle}}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    (click)="modalClose()" id="add-edit-modal-close"></button>
+            </div>
+            <div class="modal-body">
+                <app-add-edit-inspection [inspection]="inspection" *ngIf="activeAddEditInspectionComponent"></app-add-edit-inspection>
+            </div>
+        </div>
+    </div>
+</div>
